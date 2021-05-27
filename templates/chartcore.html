@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block main %}
+  <div class="row">
+
+  
+  <div class="col-6 bg-light pt-5 mt-30 rounded">
+    <div >
+        <canvas id="myChart01"></canvas>
+    </div>
+    <div >
+        <canvas id="myChart02"></canvas>
+    </div>
+    
+  
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg==" crossorigin="anonymous"></script>    
+<script>
+    var ctx01 = document.getElementById('myChart01').getContext('2d');
+    var myChart01 = new Chart(ctx01, {
+        type: 'bar',
+        data: {
+            labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
+            datasets: [{
+                label: '核心能力',
+                data: [10, 8, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        
+        options: {
+            title:{
+                display: true,
+                text: '核心能力',
+                fontColor: 'blue',
+                fontSize: 24,
+                position: 'top'
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    var ctx = document.getElementById('myChart02').getContext('2d');
+    var myChart02 = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
+            datasets: [{
+                label: '高雄醫學大學',
+                data: [10, 8, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+
+{% endblock %}

@@ -3,7 +3,8 @@ import pandas as pd
 import flask
 
 def read_data():
-    df=pd.read_excel("/home/wucc/mysite/109-2-996.xlsx")
+    #df=pd.read_excel("/home/wucc/mysite/109-2-996.xlsx")
+    df=pd.read_excel("109-2-996.xlsx")
 
     df=df[['開課序號','科目代碼','科目名稱','選必修別','學分','通識類別']]
 
@@ -72,7 +73,7 @@ def home():
 
 @app.route("/core")
 def core():
-    return flask.render_template("chart01.html")
+    return flask.render_template("chartcore.html")
 
 @app.route("/107")
 def k107():
@@ -88,15 +89,15 @@ def k109():
 
 @app.route("/a")
 def a():
-    return flask.render_template("charta.html", courses=dfa) 
+    return flask.render_template("chart109.html", courses=dfa) 
 
 @app.route("/b")
 def b():
-    return flask.render_template("charta.html", courses=dfb)
+    return flask.render_template("chart109.html", courses=dfb)
 
 @app.route("/c")
 def c():
-    return flask.render_template("charta.html", courses=dfc)
+    return flask.render_template("chart109.html", courses=dfc)
 
 @app.route("/d")
 def d():
@@ -104,29 +105,30 @@ def d():
 
 @app.route("/e")
 def e():
-    return flask.render_template("charta.html", courses=dfe)
+    return flask.render_template("chart109.html", courses=dfe)
 
 @app.route("/f")
 def f():
-    return flask.render_template("charta.html", courses=dff)
+    return flask.render_template("chart109.html", courses=dff)
 
 @app.route("/g")
 def g():
-    return flask.render_template("charta.html", courses=dfg)
+    return flask.render_template("chart109.html", courses=dfg)
 
 @app.route("/h")
 def h():
-    return flask.render_template("charta.html", courses=dfh)
+    return flask.render_template("chart109.html", courses=dfh)
 
 @app.route("/i")
 def i():
-    return flask.render_template("charta.html", courses=dfi)
+    return flask.render_template("chart109.html", courses=dfi)
 
 @app.route("/j")
 def j():
-    return flask.render_template("charta.html", courses=dfj)
+    return flask.render_template("chart109.html", courses=dfj)
 
 @app.route("/k")
 def k():
-    return flask.render_template("charta.html", courses=dfk)
+    return flask.render_template("chart109.html", courses=dfk)
 
+app.run(debug=True)

@@ -41,5 +41,15 @@ def course_sum(year, generalType):
 for index, row in request_courseID(109, '7').iterrows():
     print(index+1, row['name'], row['credit'])
 '''
+
+
 print(course_sum(109,'7'))
 
+print(df.columns)
+
+print(df.iloc[0,:])
+
+df2=df[['核心能力.1', '核心能力說明']]
+df2=df2.drop_duplicates()
+df2=df2.sort_values('核心能力.1')
+print(df2)
