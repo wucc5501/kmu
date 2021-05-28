@@ -1,25 +1,23 @@
 
 import pandas as pd
 import flask
-
-def read_data():
-    #df=pd.read_excel("/home/wucc/mysite/109-2-996.xlsx")
-    df=pd.read_excel("109-2-996.xlsx")
-
-    df=df[['開課序號','科目代碼','科目名稱','選必修別','學分','通識類別']]
-
-    df1=df[['科目代碼','科目名稱','選必修別','學分','通識類別']]
-    df1=df1.drop_duplicates()
-    df1.sort_values(['通識類別','科目代碼'])
-    df1.columns=['id','name','need','credit','type']
-
-    return df1
+from test01 import read_data, all_courseID, request_courses, request_courseID, all_courseID, core
 
 #ctype=set(df['通識類別'])
 #ctype=[c.replace(u'\xa0', u'') for c in ctype]  #去除\xa0
 
-df1=read_data()
+df=read_data('107-109general.xls')
 
+df1=all_courseID(df)
+
+dfcore=core(df)
+
+#courses={}
+
+
+
+
+'''
 dfh=df1[df1['type']=='審美\xa0']
 dfa=df1[(df1['type'] =='基礎\xa0') | (df1['type'] =='進階\xa0') ]  #基礎
 dfb=df1[df1['type']=='體育\xa0']
@@ -64,7 +62,7 @@ dfh=addno(dfh)
 dfi=addno(dfi)
 dfj=addno(dfj)
 dfk=addno(dfk)
-
+'''
 app = flask.Flask(__name__)
 
 @app.route("/")
@@ -75,60 +73,24 @@ def home():
 def core():
     return flask.render_template("chartcore.html")
 
-@app.route("/107")
-def k107():
-    return flask.render_template("chart107.html")
+@app.route('/list', methods=['GET'])
+def listByYearType():
+    year=flask.request.args.get('year')
+    gtype=flask.request.args.get('gtype')
+    dfx=request_courseID(df1, int(year), gtype)
+    #print(dfx)
+    html='chart'+str(year)+'.html'
+    return flask.render_template(html, courses=dfx.to_dict('records'))
+    #return dfx.to_dict()
 
-@app.route("/108")
-def k108():
-    return flask.render_template("chart108.html")
-
-@app.route("/109")
-def k109():
-    return flask.render_template("chart109.html")
-
-@app.route("/a")
-def a():
-    return flask.render_template("chart109.html", courses=dfa) 
-
-@app.route("/b")
-def b():
-    return flask.render_template("chart109.html", courses=dfb)
-
-@app.route("/c")
-def c():
-    return flask.render_template("chart109.html", courses=dfc)
-
-@app.route("/d")
-def d():
-    return flask.render_template("charta.html", courses=dfd)
-
-@app.route("/e")
-def e():
-    return flask.render_template("chart109.html", courses=dfe)
-
-@app.route("/f")
-def f():
-    return flask.render_template("chart109.html", courses=dff)
-
-@app.route("/g")
-def g():
-    return flask.render_template("chart109.html", courses=dfg)
-
-@app.route("/h")
-def h():
-    return flask.render_template("chart109.html", courses=dfh)
-
-@app.route("/i")
-def i():
-    return flask.render_template("chart109.html", courses=dfi)
-
-@app.route("/j")
-def j():
-    return flask.render_template("chart109.html", courses=dfj)
-
-@app.route("/k")
+@app.route('/<string:year>', methods=['GET'])
+def listByYear(year):
+    html='chart'+year+'.html'
+    return flask.render_template(html)
+    
+@app.route("/coremap")
 def k():
-    return flask.render_template("chart109.html", courses=dfk)
+    year=flask.request.args.get('year')
+    return flask.render_template("chartcore.html", corevalues=dfcore.loc[year,'7'])
 
 app.run(debug=True)

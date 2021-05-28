@@ -49,19 +49,33 @@ for index, row in request_courseID(109, '7').iterrows():
     print(index+1, row['name'], row['credit'])
 '''
 
-#找出符合學年度及通識類別代碼的課程代碼及統計開課數及修課人數
+#依學年度及核心能力為裙組求加權學習成效
 def core(df):
-    dfx=df[['學年','科目名稱','開課序號','科目代碼','選必修','核心能力.1','學習成效權重','學分']]
+    dfx=df[['學年','科目名稱','開課序號','科目代碼','選必修','核心能力.1','學習成效權重','學分','通識類別代碼']]
     dfx['核心分數']=dfx['學習成效權重']*0.01*dfx['學分']
     dfx=dfx.groupby(by=['學年','核心能力.1']).sum()
     
     return dfx
 
+#依學年度及核心能力為index，核心能力為columns，求加權學習成效樞紐分析表  
+def core_pivot(df):
+    dfx=df[['學年','科目名稱','開課序號','科目代碼','選必修','核心能力.1','學習成效權重','學分','通識類別代碼']]
+    dfx['核心分數']=dfx['學習成效權重']*0.01*dfx['學分']
+    dfx=pd.pivot_table(dfx, values='核心分數', index=['學年','核心能力.1'], columns='通識類別代碼', aggfunc='sum', fill_value=0)
+    
+    return dfx
+    
 if __name__=='__main__':
     df=read_data('107-109general.xls')
 
     df1=all_courseID(df)
     print(df1)
+
+    df2=core(df)
+    print(df2)
+
+    df3=core_pivot(df)
+    print(sum(df3.loc[107,'A']))
     '''
     print(course_sum(109,'7'))
 

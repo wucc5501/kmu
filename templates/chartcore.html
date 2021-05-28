@@ -26,7 +26,11 @@
             labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
             datasets: [{
                 label: '核心能力',
-                data: [10, 8, 3, 5, 2, 3],
+                data:[
+                {% for item in corevalues %}
+                    {{ item }},
+                {% endfor %}
+                 ] ,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
