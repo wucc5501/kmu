@@ -22,13 +22,14 @@ def read_data(filename):
 def all_courseID(df):
     
     dfx=df[['學年','學期','科目代碼','開課序號','科目名稱','選必修','通識類別代碼','通識類別','學分','選課人數']]
-    dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號'], ignore_index=True)
+    dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號'])
     #dfx=dfx.sort_values(['學年','科目代碼'],ignore_index=True)
 
     dfx['開課數量']=dfx.groupby(by=['學年','科目代碼'], sort=False)['科目代碼'].transform('count')
     dfx['選課總人數']=dfx.groupby(by=['學年','科目代碼'], sort=False)['選課人數'].transform('sum')
     
-    dfx=dfx.drop_duplicates(subset=['學年','科目代碼'], ignore_index=True)
+    dfx=dfx.drop_duplicates(subset=['學年','科目代碼'])
+
     return dfx
 #print(df1)
 
@@ -37,14 +38,14 @@ def request_courses(df, year, courseID):
     df['科目代碼']=df['科目代碼'].str.strip()
     dfx=df[(df.學年==year) & (df.科目代碼==courseID)]
     #dfx=dfx['學年','學期','科目代碼','科目名稱','選必修','通識類別代碼','通識類別','學分','開課序號']
-    dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號'], ignore_index=True)
-    dfx=dfx.sort_values(['學期','開課序號'],ignore_index=True)
+    dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號'])
+    dfx=dfx.sort_values(['學期','開課序號'])
     return dfx
 
 #找出符合學年度及通識類別代碼的課程代碼
 def request_courseID(df, year, generalType):
     dfx=df[(df.學年==year) & (df.通識類別代碼==generalType)]
-    dfx=dfx.sort_values('科目代碼',ignore_index=True)
+    dfx=dfx.sort_values('科目代碼')
     #dfx.columns=['year','sem','id','name','need','generaltype','generalname','credit','courseid']
     return dfx
 
@@ -93,7 +94,7 @@ def core_pivot(df):
 
 def addno(df):
     dfx=df
-    dfx['no']=dfx.index+1
+    dfx['no']=[c+1 for c in range(df.shape[0])]
 
     return dfx
 
