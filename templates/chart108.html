@@ -5,28 +5,28 @@
   
   <div class="col-12 bg-light pt-5 rounded">
     
-    <img src="static\img\108.jpg" width="960" height="720" usemap="#workmap" class="img-fluid">
+    <img src="static\img\108.jpg" width="1280" height="720" usemap="#workmap" class="img-fluid">
 
     <map name="workmap">
-      <area target="" alt="基礎" title="基礎" href="list?year=108&gtype=7" coords="234,356,92,301" shape="rect">
-      <area target="" alt="體育" title="體育" href="list?year=108&gtype=l" coords="319,302,454,347" shape="rect">
-      <area target="" alt="體驗" title="體驗" href="list?year=108&gtype=c" coords="514,304,631,348" shape="rect">
-      <area target="" alt="公民" title="公民" href="list?year=108&gtype=8" coords="118,526,19,477" shape="rect">
-      <area target="" alt="全球" title="全球" href="list?year=108&gtype=9" coords="126,477,227,523" shape="rect">
-      <area target="" alt="思考" title="思考" href="list?year=108&gtype=b" coords="237,474,334,526" shape="rect">
-      <area target="" alt="經典" title="經典" href="list?year=108&gtype=a" coords="345,475,445,529" shape="rect">
-      <area target="" alt="審美" title="審美" href="list?year=108&gtype=c" coords="455,475,557,527" shape="rect">
-      <area target="" alt="環境" title="環境" href="list?year=108&gtype=g" coords="567,474,676,526" shape="rect">
-      <area target="" alt="跨域" title="跨域" href="list?year=108&gtype=i" coords="688,476,785,527" shape="rect">
-      <area target="" alt="不分領域" title="不分領域" href="list?year=108&gtype=m" coords="796,476,914,570" shape="rect">
+      <area target="" alt="基礎" title="基礎" href="list?year=108&gtype=7" coords="175,341,370,422" shape="rect">
+      <area target="" alt="體育" title="體育" href="list?year=108&gtype=l" coords="1012,342,1202,418" shape="rect">
+      <area target="" alt="體驗" title="體驗" href="list?year=108&gtype=c" coords="762,344,925,425" shape="rect">
+      <area target="" alt="公民" title="公民" href="list?year=108&gtype=8" coords="71,603,212,690" shape="rect">
+      <area target="" alt="全球" title="全球" href="list?year=108&gtype=9" coords="219,605,359,691" shape="rect">
+      <area target="" alt="思考" title="思考" href="list?year=108&gtype=b" coords="370,605,516,690" shape="rect">
+      <area target="" alt="經典" title="經典" href="list?year=108&gtype=a" coords="527,609,665,691" shape="rect">
+      <area target="" alt="審美" title="審美" href="list?year=108&gtype=c" coords="678,605,816,688" shape="rect">
+      <area target="" alt="環境" title="環境" href="list?year=108&gtype=g" coords="829,606,985,694" shape="rect">
+      <area target="" alt="跨域" title="跨域" href="list?year=108&gtype=i" coords="994,605,1131,690" shape="rect">
+      <area target="" alt="不分領域" title="不分領域" href="list?year=108&gtype=m" coords="1143,588,1270,702" shape="rect">
+    
     </map>
   
   </div>
 </div>
 <div class="row">
 
-  <div class="col-1>"></div>
-  <div class="col-10  bg-light ">
+  <div class="col-12  bg-light ">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -35,16 +35,20 @@
           <th scope="col">科目名稱</th>
           <th scope="col">選必修別</th>
           <th scope="col">學分</th>
+          <th scope="col">開課數</th>
+          <th scope="col">選課總人數</th>
         </tr>
       </thead>
       <tbody>
         {% for course in courses %}
         <tr>
           <th scope="row">{{ course.no }}</th>
-          <td>{{ course.id }}</td>
-          <td>{{ course.name }}</td>
-          <td>{{ course.need }}</td>
-          <td>{{ course.credit }}</td>
+          <td><a href="courselist?year={{course.學年}}&courseid={{ course.科目代碼 }}">{{ course.科目代碼 }}</a></td>
+          <td>{{ course.科目名稱 }}</td>
+          <td>{{ course.選必修 }}</td>
+          <td>{{ course.學分 }}</td>
+          <td>{{ course.開課數量 }}</td>
+          <td>{{ course.選課總人數 }}</td>
         </tr>
         {% endfor %}
         

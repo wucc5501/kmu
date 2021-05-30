@@ -25,8 +25,7 @@
 </div>
 <div class="row">
 
-  <div class="col-1>"></div>
-  <div class="col-10  bg-light ">
+  <div class="col-12  bg-light ">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -35,16 +34,20 @@
           <th scope="col">科目名稱</th>
           <th scope="col">選必修別</th>
           <th scope="col">學分</th>
+          <th scope="col">開課數</th>
+          <th scope="col">選課總人數</th>
         </tr>
       </thead>
       <tbody>
         {% for course in courses %}
         <tr>
           <th scope="row">{{ course.no }}</th>
-          <td>{{ course.id }}</td>
-          <td>{{ course.name }}</td>
-          <td>{{ course.need }}</td>
-          <td>{{ course.credit }}</td>
+          <td><a href="courselist?year={{course.學年}}&courseid={{ course.科目代碼 }}">{{ course.科目代碼 }}</a></td>
+          <td>{{ course.科目名稱 }}</td>
+          <td>{{ course.選必修 }}</td>
+          <td>{{ course.學分 }}</td>
+          <td>{{ course.開課數量 }}</td>
+          <td>{{ course.選課總人數 }}</td>
         </tr>
         {% endfor %}
         
