@@ -1,10 +1,55 @@
 {% extends "base.html" %}
+{% block style %}
+  <link href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+{% endblock %}
+{% block css %} 
+    
+}
+{% endblock %}
 {% block main %}
+    
   <div class="row">
   
   <div class="col-12 bg-light pt-5 mt-30 rounded">
     <h1></h1>
     <h1>核心能力試算</h1>
+    <div class="p-1">
+        <span>學年：</span>
+        <input type="checkbox" class="btn-check" id="btn-check-01" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-01">107</label>
+        <input type="checkbox" class="btn-check" id="btn-check-02" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-02">108</label>
+        <input type="checkbox" class="btn-check" id="btn-check-03" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-03">109</label>
+    </div>
+    <div class="p-1">
+        <span>類別：</span>
+        <input type="checkbox" class="btn-check" id="btn-check-11" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-11">基礎</label>
+        <input type="checkbox" class="btn-check" id="btn-check-12" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-12">體育</label>
+        <input type="checkbox" class="btn-check" id="btn-check-13" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-13">體驗</label>
+        <input type="checkbox" class="btn-check" id="btn-check-14" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-14">公民社會</label>
+        <input type="checkbox" class="btn-check" id="btn-check-15" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-15">全球在地</label>
+        <input type="checkbox" class="btn-check" id="btn-check-16" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-16">思考推論</label>
+        <input type="checkbox" class="btn-check" id="btn-check-17" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-17">經典文化</label>
+        <input type="checkbox" class="btn-check" id="btn-check-18" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-18">審美鑑賞</label>
+        <input type="checkbox" class="btn-check" id="btn-check-19" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-19">環境科學</label>
+        <input type="checkbox" class="btn-check" id="btn-check-20" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-20">跨域融通</label>
+        <input type="checkbox" class="btn-check" id="btn-check-21" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btn-check-21">不分領域</label>
+    </div>  
+
+    <table id="courselist" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    </table>
     <div >
         <canvas id="myChart01"></canvas>
     </div>
@@ -19,6 +64,7 @@
 
 {% block script %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg==" crossorigin="anonymous"></script>    
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     var ctx01 = document.getElementById('myChart01').getContext('2d');
     var myChart01 = new Chart(ctx01, {
@@ -99,5 +145,60 @@
         }
     });
     </script>
-
+    <script type="text/javascript">
+    var dataSet = [
+    [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800" ],
+    [ "Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750" ],
+    [ "Ashton Cox", "Junior Technical Author", "San Francisco", "1562", "2009/01/12", "$86,000" ],
+    [ "Cedric Kelly", "Senior Javascript Developer", "Edinburgh", "6224", "2012/03/29", "$433,060" ],
+    [ "Airi Satou", "Accountant", "Tokyo", "5407", "2008/11/28", "$162,700" ],
+    [ "Brielle Williamson", "Integration Specialist", "New York", "4804", "2012/12/02", "$372,000" ],
+    [ "Herrod Chandler", "Sales Assistant", "San Francisco", "9608", "2012/08/06", "$137,500" ],
+    [ "Rhona Davidson", "Integration Specialist", "Tokyo", "6200", "2010/10/14", "$327,900" ],
+    [ "Colleen Hurst", "Javascript Developer", "San Francisco", "2360", "2009/09/15", "$205,500" ],
+    [ "Sonya Frost", "Software Engineer", "Edinburgh", "1667", "2008/12/13", "$103,600" ],
+    [ "Jena Gaines", "Office Manager", "London", "3814", "2008/12/19", "$90,560" ],
+    [ "Quinn Flynn", "Support Lead", "Edinburgh", "9497", "2013/03/03", "$342,000" ],
+    [ "Charde Marshall", "Regional Director", "San Francisco", "6741", "2008/10/16", "$470,600" ],
+    [ "Haley Kennedy", "Senior Marketing Designer", "London", "3597", "2012/12/18", "$313,500" ],
+    [ "Tatyana Fitzpatrick", "Regional Director", "London", "1965", "2010/03/17", "$385,750" ],
+    [ "Michael Silva", "Marketing Designer", "London", "1581", "2012/11/27", "$198,500" ],
+    [ "Paul Byrd", "Chief Financial Officer (CFO)", "New York", "3059", "2010/06/09", "$725,000" ],
+    [ "Gloria Little", "Systems Administrator", "New York", "1721", "2009/04/10", "$237,500" ],
+    [ "Bradley Greer", "Software Engineer", "London", "2558", "2012/10/13", "$132,000" ],
+    [ "Dai Rios", "Personnel Lead", "Edinburgh", "2290", "2012/09/26", "$217,500" ],
+    [ "Jenette Caldwell", "Development Lead", "New York", "1937", "2011/09/03", "$345,000" ],
+    [ "Yuri Berry", "Chief Marketing Officer (CMO)", "New York", "6154", "2009/06/25", "$675,000" ],
+    [ "Caesar Vance", "Pre-Sales Support", "New York", "8330", "2011/12/12", "$106,450" ],
+    [ "Doris Wilder", "Sales Assistant", "Sydney", "3023", "2010/09/20", "$85,600" ],
+    [ "Angelica Ramos", "Chief Executive Officer (CEO)", "London", "5797", "2009/10/09", "$1,200,000" ],
+    [ "Gavin Joyce", "Developer", "Edinburgh", "8822", "2010/12/22", "$92,575" ],
+    [ "Jennifer Chang", "Regional Director", "Singapore", "9239", "2010/11/14", "$357,650" ],
+    [ "Brenden Wagner", "Software Engineer", "San Francisco", "1314", "2011/06/07", "$206,850" ],
+    [ "Fiona Green", "Chief Operating Officer (COO)", "San Francisco", "2947", "2010/03/11", "$850,000" ],
+    [ "Shou Itou", "Regional Marketing", "Tokyo", "8899", "2011/08/14", "$163,000" ],
+    [ "Michelle House", "Integration Specialist", "Sydney", "2769", "2011/06/02", "$95,400" ],
+    [ "Suki Burks", "Developer", "London", "6832", "2009/10/22", "$114,500" ],
+    [ "Prescott Bartlett", "Technical Author", "London", "3606", "2011/05/07", "$145,000" ],
+    [ "Gavin Cortez", "Team Leader", "San Francisco", "2860", "2008/10/26", "$235,500" ],
+    [ "Martena Mccray", "Post-Sales support", "Edinburgh", "8240", "2011/03/09", "$324,050" ],
+    [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
+];
+$(document).ready(function() {
+    $('#courselist').DataTable( {
+        data: dataSet,
+        columns: [
+            { title: "學年" },
+            { title: "學期" },
+            { title: "開課序號" },
+            { title: "科目名稱" },
+            { title: "類別" },
+            { title: "學分" }
+        ],
+        "scrollY":        "300px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+    </script>
 {% endblock %}
