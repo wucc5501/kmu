@@ -32,10 +32,20 @@ def all_courseID(df):
 
     return dfx
 #print(df1)
+
 #求出所有課程及相關核心能力
 def all_courses(df):
     dfx=df[['學年','學期','科目代碼','開課序號','科目名稱','選必修','通識類別代碼','通識類別','學分','選課人數','核心能力','學習成效權重']]
     dfy=pd.pivot_table(dfx, index=['學年','學期','開課序號','科目名稱','通識類別','學分'], columns='核心能力', values='學習成效權重', aggfunc='sum', fill_value=0)
+    '''
+    dfy['學年']=dfy.index[0][0]
+    dfy['學期']=dfy.index[0][1]
+    dfy['開課序號']=dfy.index[0][2]
+    dfy['科目名稱']=dfy.index[0][3]
+    dfy['通識類別']=dfy.index[0][4]
+    dfy['學分']=dfy.index[0][5]
+    '''
+    dfy.reset_index(inplace=True)
     return dfy
 
 #找出符合學年度及科目代碼的所有課程
@@ -103,6 +113,10 @@ def addno(df):
 
     return dfx
 
+def df_tolist(df):
+    dflist=[]
+
+
 if __name__=='__main__':
     df=read_data('107-109general.xls')
     print(df)
@@ -123,4 +137,5 @@ if __name__=='__main__':
     print(df5)
 
     df6=all_courses(df)
-    print(df6)
+    print(df6.values.tolist())
+    

@@ -1,13 +1,17 @@
 
 import pandas as pd
 import flask
-from test01 import read_data, all_courseID, request_courses, request_courseID, all_courseID, core, addno, corebyYear, request_courses,core_pivot
+from test01 import all_courses, read_data, all_courseID, request_courses, request_courseID, all_courseID, core, addno, corebyYear, request_courses,core_pivot, all_courses
+import html
 
 #已開課
 df=read_data('107-109general.xls')
 
 #所有課程代號
 dfcourse=all_courseID(df)
+
+#所有開課含核心能力
+courses=all_courses(df)
 
 #按年度及核心能力統計核心能力的總和
 dfcore=core_pivot(df)
@@ -22,7 +26,7 @@ def home():
 #核心能力
 @app.route("/coretest")
 def coretest():
-    return flask.render_template("coretest.html")
+    return flask.render_template("coretest.html", courses=courses.values.tolist())
 
 #查詢年度通識類別的科目
 @app.route('/list', methods=['GET'])
