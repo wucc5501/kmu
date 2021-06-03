@@ -6,6 +6,7 @@ import html
 
 #已開課
 df=read_data('107-109general.xls')
+#df=read_data('/home/kmu/mysite/107-109general.xls')  #pythonanywhere
 
 #所有課程代號
 dfcourse=all_courseID(df)

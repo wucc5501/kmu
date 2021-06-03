@@ -10,6 +10,13 @@
     background-color: #e4efe7;
 }
 
+.selectedx
+{
+    font-size:120%;
+    color: #064420;
+    background-color: #e4efe7;
+}
+
 #courselist_filter{
     padding: 5px 0
 }
@@ -34,7 +41,8 @@
   <div class="col-12 bg-light pt-5 mt-30 rounded">
     <h1></h1>
     <h1>核心能力試算</h1>
-    <div class="p-1">
+
+    <div class="p-1 core-filter">
         <span>學年：</span>
         <input type="checkbox" class="btn-check" id="btn-check-01" autocomplete="off">
         <label class="btn btn-outline-primary" for="btn-check-01">107</label>
@@ -43,7 +51,7 @@
         <input type="checkbox" class="btn-check" id="btn-check-03" autocomplete="off">
         <label class="btn btn-outline-primary" for="btn-check-03">109</label>
     </div>
-    <div class="p-1">
+    <div class="p-1 core-filter">
         <span>類別：</span>
         <input type="checkbox" class="btn-check" id="btn-check-11" autocomplete="off">
         <label class="btn btn-outline-primary" for="btn-check-11">基礎</label>
@@ -170,6 +178,7 @@
     var courses_selected=[];
     $(document).ready(function() {
     
+    $('.core-filter').hide();
     
     var table =$('#courselist').DataTable( {
         data: courses,
@@ -213,7 +222,8 @@
         "scrollY":        "300px",
         "scrollCollapse": true,
         "paging":         false,
-        "select":true
+        "select":true,
+        sDom: 'lrtip'
         
     } );
     /*
@@ -224,8 +234,38 @@
     */
     $('#courselist tbody').on( 'click', 'tr', function () {
         $(this).toggleClass('selected');
+
     } );
 
+    $('#courses-selected tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selectedx');
+
+    } );
+
+    var update_charts=function(){
+        var core=[0,0,0,0,0,0];
+        var data = table_selected.rows().data();
+        console.log(data);
+        for(var i=0; i<data.length; i++){
+            core[0]=core[0]+data[i][6];
+            core[1]=core[1]+data[i][7];
+            core[2]=core[2]+data[i][8];
+            core[3]=core[3]+data[i][9];
+            core[4]=core[4]+data[i][10];
+            core[5]=core[5]+data[i][11];
+        }
+        console.log(core);    
+        
+        for(var i=0; i<6; i++){
+            myChart01.data.datasets[0].data[i]=core[i];
+            myChart02.data.datasets[0].data[i]=core[i];
+        }
+        
+        myChart01.update();
+        myChart02.update();
+    };
+
+    //新增+
     $('#add').click(function(){
 
         console.log($(".selected " ).length);
@@ -250,8 +290,9 @@
             
             courses_selected.push(temp);
         });
-        
-        var rows = table.rows( '.selected' ).remove().draw();    
+
+        //刪除已選部分
+        var rows = table.rows( '.selected' ).remove().draw(false);    
 
         //table_selected.rows().draw().nodes().to$();
         table_selected.clear()
@@ -262,6 +303,8 @@
             //$( rowNode ).css( 'color', 'green' ).animate( { color: 'black' } );
         }
 
+        update_charts();
+        /*
         var core=[0,0,0,0,0,0];
         var data = table_selected.rows().data();
         console.log(data);
@@ -282,9 +325,43 @@
         
         myChart01.update();
         myChart02.update();
+        */
     });
+
     $('#remove').click(function(){
         console.log('remove');
+        //tempx=[]
+        $(".selectedx " ).each(function(index, element){
+            temp=[]
+            var td=$(this).children("td");
+            console.log(td.first().text());
+            temp.push(parseInt(td.eq(0).text()));
+            temp.push(parseInt(td.eq(1).text()));
+            temp.push(parseInt(td.eq(2).text()));
+            temp.push(td.eq(3).text());
+            temp.push(td.eq(4).text());
+            temp.push(parseInt(td.eq(5).text()));
+            temp.push(parseInt(td.eq(6).text()));
+            temp.push(parseInt(td.eq(7).text()));
+            temp.push(parseInt(td.eq(8).text()));
+            temp.push(parseInt(td.eq(9).text()));
+            temp.push(parseInt(td.eq(10).text()));
+            temp.push(parseInt(td.eq(11).text()));
+            temp.push(parseInt(td.eq(12).text()));
+            
+            //courses.push(temp).draw(false);
+            var rowNode = table.row.add( temp ).draw(false)
+        });
+
+        //加入項目
+        //for(var i=0; i<temp.length; i++){
+        //    var rowNode = table.row.add( temp[i] ).draw().node();
+        //};
+        //刪除已選部分
+        var rows = table_selected.rows( '.selectedx' ).remove().draw(false);
+
+        update_charts();
+
     });
 } );
     </script>
