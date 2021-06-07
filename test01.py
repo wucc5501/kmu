@@ -90,6 +90,7 @@ def core(df):
     
     return dfx
 
+
 def corebyYear(df, year):
     dfx=df.loc[year,:]
     coreValues=[]
@@ -137,6 +138,9 @@ if __name__=='__main__':
     df5=corebyYear(df3,109)
     print(df5)
 
-    df6=all_courses(df)
-    print(df6.values.tolist())
+    #df6=all_courses(df)
+    #print(df6.values.tolist())
+
+    #df7=core_sum(df5)
+    print(df5[107])
     
