@@ -54,6 +54,11 @@ def coremap():
     return flask.render_template("chartcore.html", corevalues=corebyYear(dfcore, year), year=year)
     #return corebyYear(dfcore, year)
 
+#顯示3年度核心統計圖    
+@app.route("/coremap3year")
+def coremap():
+    return flask.render_template("chartcore3year.html", corevalues=[corebyYear(dfcore, 107),corebyYear(dfcore, 108),corebyYear(dfcore, 109)])
+    
 #顯示年度科目代碼的課程    
 @app.route("/courselist", methods=['GET'])
 def courselist():

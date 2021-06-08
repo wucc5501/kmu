@@ -1,7 +1,34 @@
 import pandas as pd
 
-#讀取資料
-def read_data(filename):
+#通識類別
+GeneralType={'0':'非通識', '6': '進階', '7':'基礎', '8':'公民', '9':'全球', 'a':'經典', 'b':'思考', 'c':'審美', 
+                'g':'環境科學', 'i':'跨域融通', 'j':'體驗課程', 'l':'體育','m':'部分領域'}
+#新通識類別
+NewGeneralType={'0':'非通識', '1':'國文', '2':'英文', '3':'程式','8':'公民', '9':'全球', 'a':'經典', 'b':'思考', 'c':'審美', 
+                'g':'環境科學', 'i':'跨域融通', 'j':'體驗課程', 'l':'體育','m':'部分領域'}
+
+CoreType={'A': '基礎力', 'B': '人文力', 'C': '關懷力', 'D': '思辨力', 'E':'學習力', 'F':'國際力'}
+
+#轉換新類別
+def transfer01(row):
+    
+    if row['通識類別代碼']=='7':
+        if '英' in row['科目名稱']:
+            return ('2', '英文')
+        elif '國文' in row['科目名稱']:
+            return ('1', '國文')
+        else:
+            return ('3', '程式')
+    elif row['通識類別代碼']=='6':
+         return ('2', '英文')
+    else:
+       
+        return (row['通識類別代碼'], row['通識類別'])
+    
+        
+
+#讀取課程資料
+def read_courses(filename):
 
     df=pd.read_excel(filename)
 
@@ -16,7 +43,20 @@ def read_data(filename):
     dfx.columns=['學年','學期','科目名稱','開課序號','是否開課','科目代碼','選必修','通識類別代碼','通識類別','選課人數','節次起','節次迄','核心能力','能力指標','學習成效權重','學分']
     #篩選已開課
     dfx=dfx[dfx.是否開課=='Y']
+    
     return dfx
+
+def read_courses_evaluation(filename):
+    df=pd.read_excel(filename)
+
+    return df
+
+#加上通識新類別資料
+def addNewType(df):
+    #df['通識類別新代碼']=df.apply(lambda row: transfer01(row), axis=1)
+    df['新通識類別代碼']=df.apply(lambda row: transfer01(row)[0], axis=1)
+    df['新通識類別']=df.apply(lambda row: transfer01(row)[1], axis=1)
+    return df
 
 #得所有科目代號，並求出科目代號的開課數量及修課總人數
 def all_courseID(df):
@@ -30,23 +70,19 @@ def all_courseID(df):
     
     dfx=dfx.drop_duplicates(subset=['學年','科目代碼'])
 
+    #dfx=dfx.set_index(['學年','科目代碼'])
     return dfx
-#print(df1)
+
 
 #求出所有課程及相關核心能力
 def all_courses(df):
     dfx=df[['學年','學期','科目代碼','開課序號','科目名稱','選必修','通識類別代碼','通識類別','學分','選課人數','核心能力','能力指標','學習成效權重']]
     dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號','能力指標'])
-    dfy=pd.pivot_table(dfx, index=['學年','學期','開課序號','科目名稱','通識類別','學分'], columns='核心能力', values='學習成效權重', aggfunc='sum', fill_value=0)
-    '''
-    dfy['學年']=dfy.index[0][0]
-    dfy['學期']=dfy.index[0][1]
-    dfy['開課序號']=dfy.index[0][2]
-    dfy['科目名稱']=dfy.index[0][3]
-    dfy['通識類別']=dfy.index[0][4]
-    dfy['學分']=dfy.index[0][5]
-    '''
+    dfy=pd.pivot_table(dfx, index=['學年','學期','開課序號','科目名稱','通識類別代碼','通識類別','學分'], columns='核心能力', values='學習成效權重', aggfunc='sum', fill_value=0)
+    
     dfy.reset_index(inplace=True)
+
+    #dfy=dfy.set_index(['學年','學期','開課序號'])
     return dfy
 
 #找出符合學年度及科目代碼的所有課程
@@ -118,9 +154,14 @@ def addno(df):
 def df_tolist(df):
     dflist=[]
 
+#def addCourseEvaluation(df, dfce):
+#def addNewTypebyID(df1, df2):
+
+
+
 
 if __name__=='__main__':
-    df=read_data('107-109general.xls')
+    df=read_courses('107-109general.xlsx')
     print(df)
 
     df1=all_courseID(df)
@@ -138,9 +179,25 @@ if __name__=='__main__':
     df5=corebyYear(df3,109)
     print(df5)
 
-    #df6=all_courses(df)
-    #print(df6.values.tolist())
+    df1x=all_courses(df)
+    #所有課程核心能力加上新分類
+    df6=addNewType(df1x)
+
+    print(df6)
 
     #df7=core_sum(df5)
-    print(df5[107])
+    
+    dfce=read_courses_evaluation('107-109course.xlsx')
+    print(dfce)
+
+    #所有課程核心能力加上新分類再加上課程評量
+    #df7=addCourseEvaluation(df6, dfce)
+    #print(df7)
+
+
+    #df8=addNewTypebyID(dfce, df6)
+    df8=pd.merge(dfce,df6, left_on=['學年','學期','開課序號'], right_on=['學年','學期','開課序號'], how='left' )
+    df8.rename(columns=CoreType, inplace=True)
+    print(df8.columns)
+    df8.to_excel('test01.xlsx', index=False)
     
