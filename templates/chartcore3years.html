@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <div class="row">
+  
+  <div class="col-md-4 bg-light pt-5 mt-30 rounded">
+    <h1></h1>
+    <h2 class="text-center">107學年</h2>
+    <div >
+        <canvas id="myChart01"></canvas>
+    </div>
+    
+  </div>
+  <div class="col-md-4 bg-light pt-5 mt-30 rounded">
+    <h1></h1>
+    <h2 class="text-center">108學年</h2>
+    <div >
+        <canvas id="myChart02"></canvas>
+    </div>
+    
+  </div>
+  <div class="col-md-4 bg-light pt-5 mt-30 rounded">
+    <h1></h1>
+    <h2 class="text-center">109學年</h2>
+    <div >
+        <canvas id="myChart03"></canvas>
+    </div>
+    
+  </div>
+  
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>  
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+<script>
+    //Chart.defaults.global.defaultFontSize = 16;
+    
+    var backcolors= [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 153, 0, 0.2)',
+                    'rgba(153, 255, 102, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 255, 0, 0.2)'
+                ];
+    var bordercolors= [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 153, 0, 1)',
+                    'rgba(153, 255, 102, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 255, 0, 1)'
+                ];
+
+    var colors = ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#3B3EAC',  '#DD4477', '#66AA00', '#B82E2E', '#316395', '#994499', '#22AA99', '#AAAA11', '#6633CC', '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'];
+
+    var ctx01 = document.getElementById('myChart01').getContext('2d');
+    var myChart01 = new Chart(ctx01, {
+        type: 'doughnut',
+        data: {
+            labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
+            datasets: [{
+                label: '核心能力',
+                data: {{ values[0] }},
+                backgroundColor: colors,
+                //borderColor: bordercolors,
+                borderWidth: 1
+            }]
+        }
+    });
+    
+    var ctx03 = document.getElementById('myChart03').getContext('2d');
+    var myChart03 = new Chart(ctx03, {
+        type: 'pie',
+        data: {
+            labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
+            datasets: [{
+                label: '核心能力',
+                data: {{ values[2] }},
+                backgroundColor: colors,
+                //borderColor: bordercolors,
+                borderWidth: 1
+            }]
+        },
+        
+        options: {
+            title:{
+                display: true,
+                text: '核心能力',
+                fontColor: 'blue',
+                fontSize: 24,
+                position: 'top'
+            },
+            legend: {
+                display: true
+            }
+            
+        }
+    });
+
+    var ctx02 = document.getElementById('myChart02').getContext('2d');
+    var myChart02 = new Chart(ctx02, {
+        type: 'doughnut',
+        data: {
+            labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
+            datasets: [{
+                label: '核心能力',
+                data: {{ values[1] }},
+                backgroundColor: colors,
+                //borderColor:bordercolors,
+                borderWidth: 1
+            }]
+        },
+        
+        options: {
+            title:{
+                display: true,
+                text: '核心能力',
+                fontColor: 'blue',
+                fontSize: 24,
+                position: 'top'
+            },
+            legend: {
+                display: true
+            }
+            
+        }
+    });
+/*
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data1 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[0][0]}}],
+          ['人文素養', {{values[0][1]}}],
+          ['社會關懷', {{values[0][2]}}],
+          ['創新思辨', {{values[0][3]}}],
+          ['終身學習能力',{{values[0][4]}}],
+          ['國際視野', {{values[0][5]}}]
+          
+        ]);
+
+        var data2 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[1][0]}}],
+          ['人文素養', {{values[1][1]}}],
+          ['社會關懷', {{values[1][2]}}],
+          ['創新思辨', {{values[1][3]}}],
+          ['終身學習能力',{{values[1][4]}}],
+          ['國際視野', {{values[1][5]}}]
+          
+        ]);
+
+        var data3 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[2][0]}}],
+          ['人文素養', {{values[2][1]}}],
+          ['社會關懷', {{values[2][2]}}],
+          ['創新思辨', {{values[2][3]}}],
+          ['終身學習能力',{{values[2][4]}}],
+          ['國際視野', {{values[2][5]}}]
+          
+        ]);
+
+        var options1 = {
+          title: '107學年'
+        };
+
+        var options2 = {
+          title: '108學年'
+        };
+
+        var options3 = {
+          title: '109學年'
+        };
+
+        var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
+        var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+        //var chart3 = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+        chart1.draw(data1, options1);
+        chart2.draw(data2, options2);
+        chart3.draw(data3, options3);
+
+      }
+*/
+    </script>
+
+{% endblock %}

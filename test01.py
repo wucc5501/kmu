@@ -5,7 +5,7 @@ GeneralType={'0':'非通識', '6': '進階', '7':'基礎', '8':'公民', '9':'�
                 'g':'環境科學', 'i':'跨域融通', 'j':'體驗課程', 'l':'體育','m':'部分領域'}
 #新通識類別
 NewGeneralType={'0':'非通識', '1':'國文', '2':'英文', '3':'程式','8':'公民', '9':'全球', 'a':'經典', 'b':'思考', 'c':'審美', 
-                'g':'環境科學', 'i':'跨域融通', 'j':'體驗課程', 'l':'體育','m':'部分領域'}
+                'g':'環境科學', 'i':'跨域融通', 'j':'體驗課程', 'l':'體育','m':'部分領域', 's':'服務學習', '5':'通識'}
 
 CoreType={'A': '基礎力', 'B': '人文力', 'C': '關懷力', 'D': '思辨力', 'E':'學習力', 'F':'國際力'}
 
@@ -24,7 +24,34 @@ def transfer01(row):
     else:
        
         return (row['通識類別代碼'], row['通識類別'])
+
+#計算新核心分數=核心分數*新學分，體育課2學分，其他0學分以2學分計 
+def transfer02(row):
     
+    if row['學分']==0:
+        credit=2
+    else:
+        credit=row['學分']
+           
+    return (row['A']*credit, row['B']*credit, row['C']*credit, row['D']*credit, row['E']*credit, row['F']*credit)
+
+def transfer03(row):
+    if row['科目名稱']=='服務學習':
+        return ('s', '服務學習')
+    if row['通識類別代碼']=='7':
+        if '英' in row['科目名稱']:
+            return ('2', '英文')
+        elif '國文' in row['科目名稱']:
+            return ('1', '國文')
+        else:
+            return ('3', '程式')
+    elif row['通識類別代碼']=='6':
+         return ('2', '英文')
+    elif row['通識類別代碼'] in '89abcgi':
+        return ('5', '通識')
+    else:
+       
+        return (row['通識類別代碼'], row['通識類別'])   
         
 
 #讀取課程資料
@@ -54,8 +81,16 @@ def read_courses_evaluation(filename):
 #加上通識新類別資料
 def addNewType(df):
     #df['通識類別新代碼']=df.apply(lambda row: transfer01(row), axis=1)
-    df['新通識類別代碼']=df.apply(lambda row: transfer01(row)[0], axis=1)
-    df['新通識類別']=df.apply(lambda row: transfer01(row)[1], axis=1)
+    df['通識類別代碼1']=df.apply(lambda row: transfer01(row)[0], axis=1)
+    df['通識類別1']=df.apply(lambda row: transfer01(row)[1], axis=1)
+    df['AA']=df.apply(lambda row: transfer02(row)[0], axis=1)
+    df['BB']=df.apply(lambda row: transfer02(row)[1], axis=1)
+    df['CC']=df.apply(lambda row: transfer02(row)[2], axis=1)
+    df['DD']=df.apply(lambda row: transfer02(row)[3], axis=1)
+    df['EE']=df.apply(lambda row: transfer02(row)[4], axis=1)
+    df['FF']=df.apply(lambda row: transfer02(row)[5], axis=1)
+    df['通識類別代碼2']=df.apply(lambda row: transfer03(row)[0], axis=1)
+    df['通識類別2']=df.apply(lambda row: transfer03(row)[1], axis=1)
     return df
 
 #得所有科目代號，並求出科目代號的開課數量及修課總人數
@@ -77,8 +112,8 @@ def all_courseID(df):
 #求出所有課程及相關核心能力
 def all_courses(df):
     dfx=df[['學年','學期','科目代碼','開課序號','科目名稱','選必修','通識類別代碼','通識類別','學分','選課人數','核心能力','能力指標','學習成效權重']]
-    dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號','能力指標'])
-    dfy=pd.pivot_table(dfx, index=['學年','學期','開課序號','科目名稱','通識類別代碼','通識類別','學分'], columns='核心能力', values='學習成效權重', aggfunc='sum', fill_value=0)
+    #dfx=dfx.drop_duplicates(subset=['學年','學期','開課序號','能力指標'])
+    dfy=pd.pivot_table(dfx, index=['學年','學期','開課序號','科目名稱','通識類別','學分', '通識類別代碼'], columns='核心能力', values='學習成效權重', aggfunc='sum', fill_value=0)
     
     dfy.reset_index(inplace=True)
 
@@ -161,7 +196,7 @@ def df_tolist(df):
 
 
 if __name__=='__main__':
-    df=read_courses('107-109general.xlsx')
+    df=read_courses('107-109general.xls')
     print(df)
 
     df1=all_courseID(df)
@@ -182,10 +217,10 @@ if __name__=='__main__':
     df1x=all_courses(df)
     #所有課程核心能力加上新分類
     df6=addNewType(df1x)
-
-    print(df6)
-
-    #df7=core_sum(df5)
+    df6=df6[df6.通識類別代碼2.isin(['1','2','3','s','5','l'])]
+    df6x=df6.groupby(['學年','學期','通識類別代碼2', '通識類別2'])['AA','BB','CC','DD','EE','FF'].sum()
+    print(df6x.loc[:,])
+        
     
     dfce=read_courses_evaluation('107-109course.xlsx')
     print(dfce)

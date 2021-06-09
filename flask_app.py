@@ -1,11 +1,11 @@
 
 import pandas as pd
 import flask
-from test01 import all_courses, read_data, all_courseID, request_courses, request_courseID, all_courseID, core, addno, corebyYear, request_courses,core_pivot, all_courses
+from test01 import all_courses, read_courses, all_courseID, request_courses, request_courseID, all_courseID, core, addno, corebyYear, request_courses,core_pivot, all_courses
 import html
 
 #已開課
-df=read_data('107-109general.xls')
+df=read_courses('107-109general.xls')
 #df=read_data('/home/kmu/mysite/107-109general.xls')  #pythonanywhere
 
 #所有課程代號
@@ -56,8 +56,8 @@ def coremap():
 
 #顯示3年度核心統計圖    
 @app.route("/coremap3year")
-def coremap():
-    return flask.render_template("chartcore3year.html", corevalues=[corebyYear(dfcore, 107),corebyYear(dfcore, 108),corebyYear(dfcore, 109)])
+def coremap3year():
+    return flask.render_template("chartcore3years.html", values=[corebyYear(dfcore, 107),corebyYear(dfcore, 108),corebyYear(dfcore, 109)])
     
 #顯示年度科目代碼的課程    
 @app.route("/courselist", methods=['GET'])
