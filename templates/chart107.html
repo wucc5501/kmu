@@ -10,7 +10,7 @@
     <map name="workmap">
       <area target="" alt="基礎" title="基礎" href="list?year=107&gtype=7" coords="249,346,94,276" shape="rect">
       <area target="" alt="體育" title="體育" href="list?year=107&gtype=l" coords="756,276,909,341" shape="rect">
-      <area target="" alt="體驗" title="體驗" href="list?year=107&gtype=c" coords="557,278,689,343" shape="rect">
+      <area target="" alt="體驗" title="體驗" href="list?year=107&gtype=j" coords="557,278,689,343" shape="rect">
       <area target="" alt="公民" title="公民" href="list?year=107&gtype=8" coords="6,604,116,676" shape="rect">
       <area target="" alt="全球" title="全球" href="list?year=107&gtype=9" coords="121,606,228,678" shape="rect">
       <area target="" alt="思考" title="思考" href="list?year=107&gtype=b" coords="236,606,340,672" shape="rect">
@@ -19,7 +19,12 @@
       <area target="" alt="環境" title="環境" href="list?year=107&gtype=g" coords="575,604,682,674" shape="rect">
       <area target="" alt="跨域" title="跨域" href="list?year=107&gtype=i" coords="689,607,793,673" shape="rect">
       <area target="" alt="不分領域" title="不分領域" href="list?year=107&gtype=m" coords="811,563,934,670" shape="rect">
-       
+      <area target="" alt="國文" title="國文" href="" coords="43,374,118,475" shape="rect">
+      <area target="" alt="英文" title="英文" href="" coords="137,374,200,538" shape="rect">
+      <area target="" alt="電腦" title="電腦" href="" coords="225,372,352,578" shape="rect">
+      <area target="" alt="大學入門" title="大學入門" href="" coords="501,380,618,487" shape="rect">
+      <area target="" alt="服務學習" title="服務學習" href="" coords="631,381,747,492" shape="rect">
+      <area target="" alt="博雅課程" title="博雅課程" href="" coords="323,277,504,366" shape="rect"> 
     </map>
   
   </div>
@@ -37,18 +42,20 @@
           <th scope="col">學分</th>
           <th scope="col">開課數</th>
           <th scope="col">選課總人數</th>
+          <th scope="col">功能</th>
         </tr>
       </thead>
       <tbody>
         {% for course in courses %}
         <tr>
           <th scope="row">{{ course.no }}</th>
-          <td><a href="courselist?year={{course.學年}}&courseid={{ course.科目代碼 }}">{{ course.科目代碼 }}</a></td>
+          <td>{{ course.科目代碼 }}</td>
           <td>{{ course.科目名稱 }}</td>
           <td>{{ course.選必修 }}</td>
           <td>{{ course.學分 }}</td>
           <td>{{ course.開課數量 }}</td>
           <td>{{ course.選課總人數 }}</td>
+          <td><a href="courselist?year={{course.學年}}&courseid={{ course.科目代碼 }}">課程大綱與核心能力查詢</a></td>
         </tr>
         {% endfor %}
         

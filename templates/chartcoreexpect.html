@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block styple %}
+h4 {mt-3}
+{% endblock %}
+{% block main %}
+  <div class="row" class="bg-light">
+
+  <div class="col-3"></div>
+  <div class="col-6 pt-5 mt-30 rounded text-center">
+    <h1></h1>
+    <h2 class="text-center p-3">預期個人核心能力</h2>
+    <h4 >國文4學分</h4>
+    <h4 >英文6學分(8小時)</h4>
+    <h4 >程式2學分</h4>
+    <h4 >博雅通識15學分</h4>
+    <h4 >體育0學分(8小時)</h4>
+    <h4 >服務學習1學分</h4>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <img src="/static/img/109.jpg" style="width:100%;">
+    </div>
+    <div class="col-4 pt-5">
+      <div >
+        <canvas id="myChart01"></canvas>
+    </div>
+    </div>
+  </div>
+    
+    
+   
+  
+
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>  
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+<script>
+    //Chart.defaults.global.defaultFontSize = 16;
+    
+    var backcolors= [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 153, 0, 0.2)',
+                    'rgba(153, 255, 102, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 255, 0, 0.2)'
+                ];
+    var colors= [
+                    'rgba(68, 114, 196, 1)',
+                    'rgba(237, 125, 49, 1)',
+                    'rgba(165, 165, 165, 1)',
+                    'rgba(255, 192, 0, 1)',
+                    'rgba(91, 155, 213, 1)',
+                    'rgba(112, 173, 71, 1)'                   
+                    
+                ];
+
+    //var colors = ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#3B3EAC',  '#DD4477', '#66AA00', '#B82E2E', '#316395', '#994499', '#22AA99', '#AAAA11', '#6633CC', '#E67300', '#8B0707', '#329262', '#5574A6', '#3B3EAC'];
+
+    var ctx01 = document.getElementById('myChart01').getContext('2d');
+    var myChart01 = new Chart(ctx01, {
+        type: 'pie',
+        data: {
+            labels: ['基礎力', '人文力', '關懷力', '思辨力', '學習力', '國際力'],
+            datasets: [{
+                label: '核心能力',
+                data: {{ values }},
+                backgroundColor: colors,
+                //borderColor: bordercolors,
+                borderWidth: 1
+            }]
+        }
+    });
+    
+    
+    
+    
+/*
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data1 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[0][0]}}],
+          ['人文素養', {{values[0][1]}}],
+          ['社會關懷', {{values[0][2]}}],
+          ['創新思辨', {{values[0][3]}}],
+          ['終身學習能力',{{values[0][4]}}],
+          ['國際視野', {{values[0][5]}}]
+          
+        ]);
+
+        var data2 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[1][0]}}],
+          ['人文素養', {{values[1][1]}}],
+          ['社會關懷', {{values[1][2]}}],
+          ['創新思辨', {{values[1][3]}}],
+          ['終身學習能力',{{values[1][4]}}],
+          ['國際視野', {{values[1][5]}}]
+          
+        ]);
+
+        var data3 = google.visualization.arrayToDataTable([
+          
+          ['核心能力', '加權分數'],
+          ['基礎能力', {{values[2][0]}}],
+          ['人文素養', {{values[2][1]}}],
+          ['社會關懷', {{values[2][2]}}],
+          ['創新思辨', {{values[2][3]}}],
+          ['終身學習能力',{{values[2][4]}}],
+          ['國際視野', {{values[2][5]}}]
+          
+        ]);
+
+        var options1 = {
+          title: '107學年'
+        };
+
+        var options2 = {
+          title: '108學年'
+        };
+
+        var options3 = {
+          title: '109學年'
+        };
+
+        var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
+        var chart2 = new google.visualization.PieChart(document.getElementById('piechart2'));
+        //var chart3 = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+        chart1.draw(data1, options1);
+        chart2.draw(data2, options2);
+        chart3.draw(data3, options3);
+
+      }
+*/
+    </script>
+
+{% endblock %}

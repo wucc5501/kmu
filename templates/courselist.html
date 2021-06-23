@@ -10,7 +10,9 @@
                 <th scope="col">學期</th>
                 <th scope="col">開課序號</th>
                 <th scope="col">科目名稱</th>
+                <!--
                 <th scope="col">每周時數</th>
+                -->
                 <th scope="col">選課人數</th>
                 <th scope="col">課程大綱</th>
                 <th scope="col">核心能力</th>
@@ -23,7 +25,9 @@
                 <td>{{ course.學期 }}</td>
                 <td>{{ course.開課序號 }}</td>
                 <td>{{ course.科目名稱 }}</td>
+                <!--
                 <td>{{ course.每周時數 }}</td>
+                -->
                 <td>{{ course.選課人數 }}</td>
                 <td><a href="https://wac.kmu.edu.tw/tea/teaaca/team2002c.php?SYEAR={{course.學年}}&SEM={{course.學期}}&SEQNO={{course.開課序號}}">課程大綱</a></td>
                 <td><a href="https://wac.kmu.edu.tw/aca/acamap/acara407.php?cond={{course.學年}},{{course.學期}},{{course.開課序號}}">核心能力</a></td>

@@ -41,7 +41,7 @@
   <div class="col-12 bg-light pt-5 mt-30 rounded">
     <h1></h1>
     <h1>核心能力試算</h1>
-
+<!--
     <div class="p-1 core-filter">
         <span>學年：</span>
         <input type="checkbox" class="btn-check" id="btn-check-01" autocomplete="off">
@@ -76,7 +76,7 @@
         <input type="checkbox" class="btn-check" id="btn-check-21" autocomplete="off">
         <label class="btn btn-outline-primary" for="btn-check-21">不分領域</label>
     </div>  
-
+-->
     <table id="courselist" class="table table-bordered table-sm" cellspacing="0" width="100%">
     </table>
 
@@ -85,15 +85,19 @@
 
     <table id="courses-selected" class="table table-bordered table-sm" cellspacing="0" width="100%">
     </table>
-    <div >
-        <canvas id="myChart01"></canvas>
     </div>
-    <div >
-        <canvas id="myChart02"></canvas>
+    <div class="col-7  mt-5">
+        <div >
+            <canvas id="myChart01"></canvas>
+        </div>
+        
     </div>
-    
-  
-  </div>
+    <div class="col-5 ">
+        
+        <div >
+            <canvas id="myChart02"></canvas>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -155,7 +159,7 @@
         data: {
             labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
             datasets: [{
-                label: '高雄醫學大學',
+                label: '核心能力',
                 data: [0,0,0,0,0,0],
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     
@@ -168,6 +172,11 @@
         options: {
             legend: {
                 display: false
+            },
+            scale: {
+                
+                    min:0
+                
             }
         }
     });
@@ -178,7 +187,7 @@
     var courses_selected=[];
     $(document).ready(function() {
     
-    $('.core-filter').hide();
+    //$('.core-filter').hide();
     
     var table =$('#courselist').DataTable( {
         data: courses,
@@ -224,6 +233,7 @@
         "paging":         false,
         "select":true,
         sDom: 'lrtip'
+        
         
     } );
     /*

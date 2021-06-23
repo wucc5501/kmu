@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 {% block main %}
   <div class="row">
-  
-  <div class="col-12 bg-light pt-5 mt-30 rounded">
-    <h1></h1>
+    <h1 style="margin-top: 60px;"></h1>
     <h1>{{ year }}學年</h1>
-    <div >
-        <canvas id="myChart01"></canvas>
+       
+    <div class="col-7 bg-light pt-5 mt-30 rounded">
+        <div >
+            <canvas id="myChart01"></canvas>
+        </div>
+        
     </div>
-    <div >
-        <canvas id="myChart02"></canvas>
+    <div class="col-5 bg-light pt-5 mt-30 rounded">
+        
+        
+        <div >
+            <canvas id="myChart02"></canvas>
+        </div>
     </div>
-    
-  
-  </div>
 </div>
 {% endblock %}
 
@@ -78,7 +81,7 @@
         data: {
             labels: ['基礎能力', '人文素養', '社會關懷', '創新思辨', '終身學習能力', '國際視野'],
             datasets: [{
-                label: '高雄醫學大學',
+                label: '核心能力',
                 data: [
                 {% for item in corevalues %}
                     {{ item }},

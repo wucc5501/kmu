@@ -54,7 +54,7 @@ def transfer03(row):
         return (row['通識類別代碼'], row['通識類別'])   
         
 
-#讀取課程資料
+#讀取課程資料，回饋已開課清單
 def read_courses(filename):
 
     df=pd.read_excel(filename)
@@ -192,11 +192,19 @@ def df_tolist(df):
 #def addCourseEvaluation(df, dfce):
 #def addNewTypebyID(df1, df2):
 
-
+def core_sum_by_gtype(df):
+    dfx=addNewType(df)
+    dfx=dfx[dfx.通識類別代碼2.isin(['1','2','3','s','5','l'])]
+    dfx=dfx.groupby(['通識類別代碼2', '通識類別2'])['AA','BB','CC','DD','EE','FF'].sum()
+    dfx.reset_index(inplace=True)
+    
+    
+    #print(dfx)
+    return dfx
 
 
 if __name__=='__main__':
-    df=read_courses('107-109general.xls')
+    df=read_courses('107-109general_0611.xls')
     print(df)
 
     df1=all_courseID(df)
@@ -217,11 +225,12 @@ if __name__=='__main__':
     df1x=all_courses(df)
     #所有課程核心能力加上新分類
     df6=addNewType(df1x)
-    df6=df6[df6.通識類別代碼2.isin(['1','2','3','s','5','l'])]
-    df6x=df6.groupby(['學年','學期','通識類別代碼2', '通識類別2'])['AA','BB','CC','DD','EE','FF'].sum()
-    print(df6x.loc[:,])
+    df6x=core_sum_by_gtype(df6)
+    #print('ok')
+    print(df6x.values)
+    df6.to_excel('allcourses.xlsx', index=False)
         
-    
+    #課程評量
     dfce=read_courses_evaluation('107-109course.xlsx')
     print(dfce)
 
@@ -231,7 +240,8 @@ if __name__=='__main__':
 
 
     #df8=addNewTypebyID(dfce, df6)
-    df8=pd.merge(dfce,df6, left_on=['學年','學期','開課序號'], right_on=['學年','學期','開課序號'], how='left' )
+    df8=pd.merge(df6,dfce, left_on=['學年','學期','開課序號'], right_on=['學年','學期','開課序號'], how='left' )
+    #df8=pd.merge(dfce,df6, left_on=['學年','學期','開課序號'], right_on=['學年','學期','開課序號'], how='left' )
     df8.rename(columns=CoreType, inplace=True)
     print(df8.columns)
     df8.to_excel('test01.xlsx', index=False)

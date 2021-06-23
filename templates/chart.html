@@ -1,13 +1,37 @@
 {% extends "base.html" %}
+{% block style %} 
+
+{% endblock %} 
 {% block main %}
-  <div class="row">
-    <div class="col-12">
-      <div class="bg-light p-5 mt-10 rounded">
-        <h1></h1>
-        <h1>歡迎蒞臨通識教育中心</h1>
+  <div class="row" >
+    <div class="col-12 mt-5">
+      <h1> </h1>
+        <h1 class="display-4">歡迎蒞臨通識教育中心</h1>
+        <h2>提供以下資料查詢</h2>
+    <div class="jumbotron bg-cover m-10" style="background-image: linear-gradient(to bottom, rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%), url('/static/img/photo01.jpg'); background-repeat: no-repeat;">
+      <div class="container">
+        
+        
+        <div class="m-3 p-5">
+          <h3>課程地圖</h3>
+          <a href="107" class="btn btn-primary m-3 btn-lg">107學年</a>
+          <a href="108" class="btn btn-secondary m-3 btn-lg">108學年</a>
+          <a href="109" class="btn btn-success m-3 btn-lg">109學年</a>
+          <h3>核心能力</h3>
+          <a href="coremap?year=107" class="btn btn-primary btn-lg m-3">107學年</a>
+          <a href="coremap?year=108" class="btn btn-secondary btn-lg m-3">108學年</a>
+          <a href="coremap?year=109" class="btn btn-success btn-lg m-3">109學年</a>
+          <br>
+          <a href="coreexpect" class="btn btn-danger btn-lg m-3">預期個人核心能力</a>
+          <a href="coretest" class="btn btn-danger btn-lg m-3">核心能力試算</a>
+        </div>
+        
       </div>
     </div>
+  </div>
+  
 
+    
   </div>
   
 
